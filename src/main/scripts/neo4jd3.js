@@ -1,8 +1,8 @@
 /* global d3, document */
 /* jshint latedef:nofunc */
 'use strict';
-const InfoPanel = require("./infobar.js");
-const FontAwesome = require("./fontawesome.js.js");
+var InfoPanel = require("./infobar.js");
+var FontAwesome = require("./fontawesome.js");
 
 function Neo4jD3(_selector, _options) {
   var container, graph, info, node, nodes, relationship, relationshipOutline, relationshipOverlay, relationshipText, relationships, selector, simulation, svg, svgNodes, svgRelationships, svgScale, svgTranslate,
@@ -26,7 +26,7 @@ function Neo4jD3(_selector, _options) {
       relationshipColor: '#a5abb6',
       zoomFit: false
     },
-    VERSION = '0.0.1';
+    VERSION = '0.0.2';
 
   function appendGraph(container) {
     svg = container.append('svg')
@@ -453,7 +453,9 @@ function Neo4jD3(_selector, _options) {
 
     simulation = initSimulation();
 
-    if (options.neo4jDataUrl) {
+   if (options.neo4jData) {
+    loadNeo4jData(options.neo4jData);
+  } else if (options.neo4jDataUrl) {
       loadNeo4jDataFromUrl(options.neo4jDataUrl);
     } else {
       console.error('Error: both neo4jData and neo4jDataUrl are empty!');
@@ -513,14 +515,18 @@ function Neo4jD3(_selector, _options) {
     return simulation;
   }
 
+  function loadNeo4jData() {
+    nodes = [];
+    relationships = [];
+
+    updateWithNeo4jData(options.neo4jData);
+  }
+
   function loadNeo4jDataFromUrl(neo4jDataUrl) {
     nodes = [];
     relationships = [];
 
     d3.json(neo4jDataUrl, function(error, data) {
-      if (error) {
-        throw error;
-      }
 
       updateWithNeo4jData(data);
     });
@@ -537,49 +543,6 @@ function Neo4jD3(_selector, _options) {
       nodes: data.nodes,
       relationships: data.links
     };
-
-
-    // data.results.forEach(function(result) {
-    //   result.data.forEach(function(data) {
-    //     data.graph.nodes.forEach(function(node) {
-    //       if (!contains(graph.nodes, node.id)) {
-    //         graph.nodes.push(node);
-    //       }
-    //     });
-
-    //     data.graph.relationships.forEach(function(relationship) {
-    //       relationship.source = relationship.startNode;
-    //       relationship.target = relationship.endNode;
-    //       graph.relationships.push(relationship);
-    //     });
-
-    //     data.graph.relationships.sort(function(a, b) {
-    //       if (a.source > b.source) {
-    //         return 1;
-    //       } else if (a.source < b.source) {
-    //         return -1;
-    //       } else {
-    //         if (a.target > b.target) {
-    //           return 1;
-    //         }
-
-    //         if (a.target < b.target) {
-    //           return -1;
-    //         } else {
-    //           return 0;
-    //         }
-    //       }
-    //     });
-
-    //     for (var i = 0; i < data.graph.relationships.length; i++) {
-    //       if (i !== 0 && data.graph.relationships[i].source === data.graph.relationships[i-1].source && data.graph.relationships[i].target === data.graph.relationships[i-1].target) {
-    //         data.graph.relationships[i].linknum = data.graph.relationships[i - 1].linknum + 1;
-    //       } else {
-    //         data.graph.relationships[i].linknum = 1;
-    //       }
-    //     }
-    //   });
-    // });
 
     return graph;
   }

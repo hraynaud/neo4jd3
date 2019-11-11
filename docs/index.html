@@ -26,6 +26,99 @@
         <script src="js/d3.min.js"></script>
         <script src="js/neo4jd3.js?v=0.0.1"></script>
         <script type="text/javascript">
+
+        var data = {
+  "nodes": [
+    {
+      "label": "Tisha Skillz",
+      "type": "Person",
+      "id": 180
+    },
+    {
+      "label": "Cooking",
+      "type": "Topic",
+      "id": 200
+    },
+    {
+      "label": "hidden endorses Kendra Skillz for Cooking",
+      "type": "Endorsement",
+      "id": 205
+    },
+    {
+      "label": "Herby Skillz",
+      "type": "Person",
+      "id": 160
+    },
+    {
+      "label": "hidden",
+      "type": "Person",
+      "id": 182
+    },
+    {
+      "label": "hidden endorses hidden for Cooking",
+      "type": "Endorsement",
+      "id": 204
+    },
+    {
+      "label": "Kendra Skillz",
+      "type": "Person",
+      "id": 183
+    },
+    {
+      "label": "Vince Skillz",
+      "type": "Person",
+      "id": 186
+    }
+  ],
+  "links": [
+    {
+      "source": 205,
+      "target": 180,
+      "type": "ENDORSEMENT_SOURCE"
+    },
+    {
+      "source": 205,
+      "target": 200,
+      "type": "ENDORSE_TOPIC"
+    },
+    {
+      "source": 160,
+      "target": 180,
+      "type": "KNOWS"
+    },
+    {
+      "source": 182,
+      "target": 160,
+      "type": "KNOWS"
+    },
+    {
+      "source": 204,
+      "target": 182,
+      "type": "ENDORSEMENT_SOURCE"
+    },
+    {
+      "source": 204,
+      "target": 200,
+      "type": "ENDORSE_TOPIC"
+    },
+    {
+      "source": 180,
+      "target": 183,
+      "type": "KNOWS"
+    },
+    {
+      "source": 183,
+      "target": 186,
+      "type": "KNOWS"
+    },
+    {
+      "source": 180,
+      "target": 186,
+      "type": "KNOWS"
+    }
+  ]
+}
+
             function init() {
                 var neo4jd3 = new Neo4jd3('#neo4jd3', {
                     // highlight: [
@@ -90,8 +183,9 @@
 //                        'zoomOut': 'img/twemoji/1f50e.svg'
                     },
                     minCollision: 60,
-                    neo4jDataUrl: 'http://localhost:3000/api/v1/topic_contacts/Cooking',
-                    nodeRadius: 25,
+                    //neo4jDataUrl: 'http://localhost:3000/api/v1/topic_contacts/Cooking',
+                  neo4jData: data, 
+                  nodeRadius: 25,
                     onNodeDoubleClick: function(node) {
                         switch(node.id) {
                             case '25':
