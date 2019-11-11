@@ -2,6 +2,7 @@
 /* jshint latedef:nofunc */
 'use strict';
 const InfoPanel = require("./infobar.js");
+const FontAwesome = require("./fontawesome.js.js");
 
 function Neo4jD3(_selector, _options) {
   var container, graph, info, node, nodes, relationship, relationshipOutline, relationshipOverlay, relationshipText, relationships, selector, simulation, svg, svgNodes, svgRelationships, svgScale, svgTranslate,
@@ -12,7 +13,7 @@ function Neo4jD3(_selector, _options) {
     arrowSize: 4,
     colors: colors(),
     highlight: undefined,
-    iconMap: fontAwesomeIcons(),
+    iconMap: FontAwesome.fontAwesomeIcons(),
     icons: undefined,
     imageMap: {},
     images: undefined,
